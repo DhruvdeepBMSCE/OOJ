@@ -1,0 +1,76 @@
+import java.util.*;
+
+class cur_acct extends account {
+    double minimumBalance;
+    double serviceCharge;
+
+    public cur_acct(String name, int number, double balance, double minBalance, double serviceCharge) {
+        super(name, number, "Current", balance);
+        this.minimumBalance = minBalance;
+        this.serviceCharge = serviceCharge;
+    }
+
+    public void withdraw(double amount) {
+        if (balance - amount < minimumBalance) {
+            balance -= serviceCharge;
+            System.out.println("Service Charge: " + serviceCharge);
+        }
+        balance -= amount;
+        System.out.println("Amount withdrawn by " + customerName + ": " + amount + ", Remaining Balance: " + balance);
+    }
+}
+
+class sav_acct extends account {
+    double interestRate;
+
+    public sav_acct(String name, int number, double balance, double interestRate) {
+        super(name, number, "Savings", balance);
+        this.interestRate = interestRate;
+    }
+
+    public void depositInterest() {
+        double interest = balance * interestRate / 100;
+        balance += interest;
+        System.out.println("Interest added to " + customerName + "'s account: " + interest);
+    }
+}
+
+class account {
+    String customerName;
+    int accountNumber;
+    String accountType;
+    double balance;
+
+    public account(String name, int number, String type, double balance) {
+        this.customerName = name;
+        this.accountNumber = number;
+        this.accountType = type;
+        this.balance = balance;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited by " + customerName + ": " + amount);
+    }
+
+    public void displayBalance() {
+        System.out.println("Balance for " + customerName + ": " + balance);
+    }
+}
+
+public class Bank {
+    public static void main(String[] args) {
+        cur_acct currentAccount = new cur_acct("James", 12345, 5000, 1000, 50);
+        currentAccount.deposit(1000);
+        currentAccount.displayBalance();
+        currentAccount.withdraw(4500);
+        currentAccount.displayBalance();
+
+        sav_acct savingsAccount = new sav_acct("Judy", 67890, 2000, 5);
+        savingsAccount.deposit(500);
+        savingsAccount.depositInterest();
+        savingsAccount.displayBalance();
+
+        System.out.println("Dhruvdeep Nayak-093");
+    }
+}
