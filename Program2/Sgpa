@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+class Student {
+    String usn;
+    String name;
+    int[] credits;
+    int[] marks;
+
+    Student(int numSubjects) {
+        credits = new int[numSubjects];
+        marks = new int[numSubjects];
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the number of subjects:");
+        int numSubjects = sc.nextInt();
+
+        Student student = new Student(numSubjects);
+
+        System.out.println("Enter USN:");
+        student.usn = sc.next();
+
+        System.out.println("Enter name:");
+        sc.nextLine();
+        student.name = sc.nextLine();
+
+        for (int i = 0; i < numSubjects; i++) {
+            System.out.println("Enter credits for subject " + (i + 1) + ":");
+            student.credits[i] = sc.nextInt();
+
+            System.out.println("Enter marks for subject " + (i + 1) + ":");
+            student.marks[i] = sc.nextInt();
+        }
+
+        System.out.println("\nStudent Details:");
+        System.out.println("Name: " + student.name);
+        System.out.println("USN: " + student.usn);
+        System.out.println("Credits and Marks:");
+        for (int i = 0; i < numSubjects; i++) {
+            System.out.println("Subject " + (i + 1) + " - Credits: " + student.credits[i] + ", Marks: " + student.marks[i]);
+        }
+
+        int totalCredits = 0;
+        double totalPoints = 0.0;
+
+        for (int i = 0; i < numSubjects; i++) {
+            int mark = student.marks[i];
+            int gradePoint;
+
+            if (mark >= 90) gradePoint = 10;
+            else if (mark >= 80) gradePoint = 9;
+            else if (mark >= 70) gradePoint = 8;
+            else if (mark >= 60) gradePoint = 7;
+            else if (mark >= 50) gradePoint = 6;
+            else if (mark >= 40) gradePoint = 5;
+            else gradePoint = 0;
+
+            totalPoints += gradePoint * student.credits[i];
+            totalCredits += student.credits[i];
+        }
+
+        double sgpa = totalPoints / totalCredits;
+
+        System.out.printf("SGPA is: %.2f\n", sgpa);
+
+        System.out.println("\nDhruvdeep Nayak 093");
+
+        sc.close();
+    }
+}
+
+
