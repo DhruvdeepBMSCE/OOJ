@@ -1,0 +1,60 @@
+class WrongAgeException extends Exception {
+    public WrongAgeException(String message) {
+        super(message);
+    }
+}
+
+class Father {
+    int age;
+
+    public Father(int age) throws WrongAgeException {
+        if (age < 0) {
+            throw new WrongAgeException("Father's age cannot be negative");
+        }
+        this.age = age;
+    }
+
+    public void displayAge() {
+        System.out.println("Father's age is: " + age);
+    }
+}
+
+class Son extends Father {
+
+    public Son(int fatherAge, int sonAge) throws WrongAgeException {
+        super(fatherAge);
+        if (sonAge >= fatherAge) {
+            throw new WrongAgeException("Invalid son's age. Son's age should be less than father's age.");
+        }
+        System.out.println("Son's age is: " + sonAge);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Father father = new Father(40);
+            Son son = new Son(40, 20);
+            father.displayAge();
+        } catch (WrongAgeException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+        
+        try {
+            Father father = new Father(20);
+            Son son = new Son(20, 25); // This will throw an exception
+        } catch (WrongAgeException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        try {
+            Father father = new Father(20);
+            Son son = new Son(20, 6); // This is valid
+            father.displayAge();
+        } catch (WrongAgeException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        System.out.println("Dhruvdeep Nayak-093");
+    }
+}
